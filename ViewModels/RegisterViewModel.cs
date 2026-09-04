@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BookBinding.Models.ViewModels
+namespace BookBinding.ViewModels
 {
     public class RegisterViewModel
     {

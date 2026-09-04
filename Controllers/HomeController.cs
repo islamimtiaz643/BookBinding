@@ -1,32 +1,38 @@
+using BookBinding.Data;
 using BookBinding.Models;
+using BookBinding.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace BookBinding.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(AppDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var featured = await _context.Journals
+                .Include(j => j.Images)
+                .Include(j => j.Leather)
+                .Include(j => j.Paper)
+                .Where(j => j.Status == JournalStatus.Active && j.IsFeatured)
+                .OrderByDescending(j => j.CreatedAt)
+                .Take(6)
+                .ToListAsync();
+
+            return View(featured);
         }
 
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

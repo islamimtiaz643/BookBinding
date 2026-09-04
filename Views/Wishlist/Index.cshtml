@@ -1,0 +1,44 @@
+﻿@model List<BookBinding.Models.Wishlist>
+@{
+    ViewData["Title"] = "My Wishlist";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">My Wishlist</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="row g-4">
+        @foreach (var w in Model)
+        {
+            var img = w.Journal.Images != null && w.Journal.Images.Any()
+                ? w.Journal.Images.OrderBy(i => i.SortOrder).First().ImageUrl : null;
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    @if (!string.IsNullOrEmpty(img))
+                    {
+                        <img src="@img" class="card-img-top" style="height:200px;object-fit:cover;" alt="@w.Journal.Title" />
+                    }
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@w.Journal.Title</h5>
+                        <p class="fw-bold">@w.Journal.Price.ToString("N2")</p>
+                        <div class="mt-auto d-flex gap-2">
+                            <a asp-controller="Journal" asp-action="Details" asp-route-id="@w.Journal.Id" class="btn btn-dark btn-sm">View</a>
+                            <form asp-action="Remove" asp-route-id="@w.Id" method="post">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (!Model.Any())
+        {
+            <p class="text-muted text-center py-5">Your wishlist is empty. Browse the <a asp-controller="Journal" asp-action="Index">journal catalog</a> to add some.</p>
+        }
+    </div>
+</div>

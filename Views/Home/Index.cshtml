@@ -1,8 +1,57 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<BookBinding.Models.Journal>
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero-section text-center">
+    <div class="container position-relative">
+        <p class="text-uppercase mb-2" style="letter-spacing:3px;color:var(--gold-accent);font-size:0.85rem;">Crafted by hand, page by page</p>
+        <h1 class="mb-3">Handbound Leather Journals</h1>
+        <p class="lead mx-auto" style="max-width:600px;">
+            Choose from our ready-made collection, or design your own with your choice of leather, paper, and binding style.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+            <a asp-controller="Journal" asp-action="Index" class="btn btn-leather btn-lg px-4">Browse Journals</a>
+            @if (User.Identity != null && User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+            {
+                <a asp-controller="CustomJournal" asp-action="Create" class="btn btn-outline-light btn-lg px-4">Build Your Own</a>
+            }
+            else if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Account" asp-action="Register" class="btn btn-outline-light btn-lg px-4">Sign Up to Customize</a>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <h2 class="section-title mb-4">Featured Journals</h2>
+
+    @if (Model.Any())
+    {
+        <div class="row g-4">
+            @foreach (var j in Model)
+            {
+                var img = j.Images != null && j.Images.Any() ? j.Images.OrderBy(i => i.SortOrder).First().ImageUrl : null;
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card h-100 shadow-sm">
+                        @if (!string.IsNullOrEmpty(img))
+                        {
+                            <img src="@img" class="card-img-top" style="height:220px;object-fit:cover;" alt="@j.Title" />
+                        }
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@j.Title</h5>
+                            <p class="text-muted mb-1">@j.Leather?.ColorName leather &middot; @j.Paper?.DesignType paper</p>
+                            <p class="fw-bold mb-3">@j.Price.ToString("N2")</p>
+                            <a asp-controller="Journal" asp-action="Details" asp-route-id="@j.Id" class="btn btn-dark mt-auto">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-muted">No featured journals yet — check back soon, or <a asp-controller="Journal" asp-action="Index">browse the full catalog</a>.</p>
+    }
 </div>

@@ -1,0 +1,101 @@
+﻿@model BookBinding.ViewModels.CustomJournalViewModel
+@{
+    ViewData["Title"] = "Custom Journal Builder";
+}
+
+<div class="container py-4">
+    <h2 class="mb-1">Custom Journal Builder</h2>
+    <p class="text-muted mb-4">Configure your journal below, then submit it as a request. We'll follow up with a quote.</p>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                <h5 class="mb-3">1. Leather</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-12 col-md-6">
+                        <label asp-for="LeatherId" class="form-label"></label>
+                        <select asp-for="LeatherId" class="form-select">
+                            <option value="">-- Select Leather --</option>
+                            @foreach (var l in Model.Leathers)
+                            {
+                                <option value="@l.Id">@l.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="LeatherId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <h5 class="mb-3">2. Paper</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-12 col-md-6">
+                        <label asp-for="PaperId" class="form-label"></label>
+                        <select asp-for="PaperId" class="form-select">
+                            <option value="">-- Fully custom (enter dimensions below) --</option>
+                            @foreach (var p in Model.Papers)
+                            {
+                                <option value="@p.Id">@p.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label asp-for="CustomLengthMm" class="form-label"></label>
+                        <input asp-for="CustomLengthMm" class="form-control" />
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label asp-for="CustomWidthMm" class="form-label"></label>
+                        <input asp-for="CustomWidthMm" class="form-control" />
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label asp-for="DesiredGsm" class="form-label"></label>
+                        <input asp-for="DesiredGsm" class="form-control" />
+                    </div>
+                    <div class="col-12">
+                        <div class="form-text">Either pick a preset paper above, OR leave it blank and enter custom Length/Width.</div>
+                    </div>
+                </div>
+
+                <h5 class="mb-3">3. Binding Style</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-12 col-md-6">
+                        <label asp-for="BindingStyleId" class="form-label"></label>
+                        <select asp-for="BindingStyleId" class="form-select">
+                            <option value="">-- Select Binding Style --</option>
+                            @foreach (var b in Model.BindingStyles)
+                            {
+                                <option value="@b.Id">@b.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="BindingStyleId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <h5 class="mb-3">4. Extras</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-6 col-md-3">
+                        <label asp-for="PageCount" class="form-label"></label>
+                        <input asp-for="PageCount" class="form-control" />
+                        <span asp-validation-for="PageCount" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-5">
+                        <label asp-for="EngravingText" class="form-label"></label>
+                        <input asp-for="EngravingText" class="form-control" />
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="Notes" class="form-label"></label>
+                        <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-dark btn-lg">Submit Custom Request</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

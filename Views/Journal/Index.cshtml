@@ -1,0 +1,76 @@
+﻿@model List<BookBinding.Models.Journal>
+@{
+    ViewData["Title"] = "Journals";
+}
+
+<div class="container py-4">
+    <h2 class="section-title mb-4">Our Journals</h2>
+
+    <form method="get" class="row g-2 mb-4">
+        <div class="col-12 col-md-3">
+            <input type="text" name="search" value="@Context.Request.Query["search"]" class="form-control" placeholder="Search journals..." />
+        </div>
+        <div class="col-6 col-md-2">
+            <select name="leatherColor" class="form-select">
+                <option value="">All Leather Colors</option>
+                @foreach (var c in (List<string>)ViewBag.LeatherColors)
+                {
+                    <option value="@c" selected="@(Context.Request.Query["leatherColor"] == c)">@c</option>
+                }
+            </select>
+        </div>
+        <div class="col-6 col-md-2">
+            <select name="paperDesign" class="form-select">
+                <option value="">All Paper Designs</option>
+                @foreach (var d in (List<string>)ViewBag.PaperDesigns)
+                {
+                    <option value="@d" selected="@(Context.Request.Query["paperDesign"] == d)">@d</option>
+                }
+            </select>
+        </div>
+        <div class="col-6 col-md-2">
+            <select name="bindingStyle" class="form-select">
+                <option value="">All Binding Styles</option>
+                @foreach (var b in (List<string>)ViewBag.BindingStyles)
+                {
+                    <option value="@b" selected="@(Context.Request.Query["bindingStyle"] == b)">@b</option>
+                }
+            </select>
+        </div>
+        <div class="col-6 col-md-2">
+            <select name="sort" class="form-select">
+                <option value="newest">Newest</option>
+                <option value="price_low">Price: Low to High</option>
+                <option value="price_high">Price: High to Low</option>
+            </select>
+        </div>
+        <div class="col-12 col-md-1">
+            <button type="submit" class="btn btn-dark w-100">Go</button>
+        </div>
+    </form>
+
+    <div class="row g-4">
+        @foreach (var j in Model)
+        {
+            var img = j.Images != null && j.Images.Any() ? j.Images.OrderBy(i => i.SortOrder).First().ImageUrl : null;
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    @if (!string.IsNullOrEmpty(img))
+                    {
+                        <img src="@img" class="card-img-top" style="height:220px;object-fit:cover;" alt="@j.Title" />
+                    }
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@j.Title</h5>
+                        <p class="text-muted mb-1">@j.Leather?.ColorName leather &middot; @j.Paper?.DesignType paper</p>
+                        <p class="fw-bold mb-3">@j.Price.ToString("N2")</p>
+                        <a asp-action="Details" asp-route-id="@j.Id" class="btn btn-dark mt-auto">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (!Model.Any())
+        {
+            <p class="text-muted text-center py-5">No journals match your filters yet.</p>
+        }
+    </div>
+</div>

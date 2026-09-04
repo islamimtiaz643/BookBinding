@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container py-4">
+    <h2 class="section-title mb-4">Admin Dashboard</h2>
+
+    <div class="row g-3">
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="card shadow-sm h-100 stat-card">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Journals</h6>
+                    <h2>@ViewBag.TotalJournals</h2>
+                    <a asp-controller="Journal" asp-action="Index" class="btn btn-sm btn-dark">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="card shadow-sm h-100 stat-card">
+                <div class="card-body">
+                    <h6 class="text-muted">Papers</h6>
+                    <h2>@ViewBag.TotalPapers</h2>
+                    <a asp-controller="Paper" asp-action="Index" class="btn btn-sm btn-dark">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="card shadow-sm h-100 stat-card">
+                <div class="card-body">
+                    <h6 class="text-muted">Leathers</h6>
+                    <h2>@ViewBag.TotalLeathers</h2>
+                    <a asp-controller="Leather" asp-action="Index" class="btn btn-sm btn-dark">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="card shadow-sm h-100 stat-card">
+                <div class="card-body">
+                    <h6 class="text-muted">Binding Styles</h6>
+                    <h2>@ViewBag.TotalBindingStyles</h2>
+                    <a asp-controller="BindingStyle" asp-action="Index" class="btn btn-sm btn-dark">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="card shadow-sm h-100 stat-card">
+                <div class="card-body">
+                    <h6 class="text-muted">Registered Users</h6>
+                    <h2>@ViewBag.TotalUsers</h2>
+                    <a asp-controller="AdminUser" asp-action="Index" class="btn btn-sm btn-dark">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="card shadow-sm h-100 border-warning">
+                <div class="card-body">
+                    <h6 class="text-muted">Pending Custom Requests</h6>
+                    <h2>@ViewBag.PendingRequests</h2>
+                    <a asp-controller="AdminCustomRequest" asp-action="Index" class="btn btn-sm btn-warning">Review</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 ﻿using BookBinding.Data;
 using BookBinding.Models;
 using BookBinding.Models.Enums;
-using BookBinding.Models.ViewModels;
+using BookBinding.ViewModels;
 using BookBinding.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -106,9 +106,9 @@ namespace BookBinding.Controllers
                 return Redirect(returnUrl);
 
             if (user.Role == UserRole.Admin)
-                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                return RedirectToAction("Index", "Admin");
 
-            return RedirectToAction("Index", "Dashboard", new { area = "Customer" });
+            return RedirectToAction("Index", "Customer");
         }
 
         [HttpPost]

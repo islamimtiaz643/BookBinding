@@ -1,0 +1,48 @@
+﻿@model BookBinding.Models.Journal
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container py-4">
+    <div class="row g-4">
+        <div class="col-12 col-lg-6">
+            @if (Model.Images != null && Model.Images.Any())
+            {
+                var mainImg = Model.Images.OrderBy(i => i.SortOrder).First();
+                <img src="@mainImg.ImageUrl" class="img-fluid rounded shadow-sm mb-2" alt="@Model.Title" />
+                <div class="d-flex gap-2 flex-wrap">
+                    @foreach (var img in Model.Images.OrderBy(i => i.SortOrder).Skip(1))
+                    {
+                        <img src="@img.ImageUrl" style="width:80px;height:80px;object-fit:cover;" class="rounded border" />
+                    }
+                </div>
+            }
+        </div>
+        <div class="col-12 col-lg-6">
+            <h2>@Model.Title</h2>
+            <p class="text-muted">@Model.Description</p>
+            <h4 class="mb-3">@Model.Price.ToString("N2")</h4>
+
+            <table class="table table-sm">
+                <tbody>
+                    <tr><th>Leather</th><td>@Model.Leather?.Type - @Model.Leather?.ColorName</td></tr>
+                    <tr><th>Paper</th><td>@Model.Paper?.Name (@Model.Paper?.DesignType, @Model.Paper?.Gsm GSM)</td></tr>
+                    <tr><th>Binding Style</th><td>@Model.BindingStyle?.Name</td></tr>
+                    <tr><th>Page Count</th><td>@Model.PageCount</td></tr>
+                    <tr><th>Dimensions</th><td>@Model.FinalLengthMm &times; @Model.FinalWidthMm &times; @Model.ThicknessMm mm</td></tr>
+                </tbody>
+            </table>
+
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <form asp-controller="Wishlist" asp-action="Add" asp-route-journalId="@Model.Id" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-outline-dark">Add to Wishlist</button>
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login" class="btn btn-outline-dark">Login to save to Wishlist</a>
+            }
+        </div>
+    </div>
+</div>

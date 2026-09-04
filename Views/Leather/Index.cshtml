@@ -1,0 +1,68 @@
+﻿@model List<BookBinding.Models.Leather>
+@{
+    ViewData["Title"] = "Manage Leathers";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <h2>Manage Leathers</h2>
+        <a asp-action="Create" class="btn btn-dark">+ Add Leather</a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Color</th>
+                    <th>Swatch</th>
+                    <th>Texture</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var l in Model)
+                {
+                    <tr>
+                        <td>@l.Type</td>
+                        <td>@l.ColorName</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(l.ColorHex))
+                            {
+                                <span style="display:inline-block;width:24px;height:24px;border-radius:4px;background-color:@l.ColorHex;border:1px solid #ccc;"></span>
+                            }
+                        </td>
+                        <td>@l.Texture</td>
+                        <td>
+                            @if (l.IsActive)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Inactive</span>
+                            }
+                        </td>
+                        <td class="text-nowrap">
+                            <a asp-action="Edit" asp-route-id="@l.Id" class="btn btn-sm btn-outline-dark">Edit</a>
+                            <form asp-action="Delete" asp-route-id="@l.Id" method="post" class="d-inline"
+                                  onsubmit="return confirm('Delete this leather?');">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="6" class="text-center text-muted py-4">No leathers added yet.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

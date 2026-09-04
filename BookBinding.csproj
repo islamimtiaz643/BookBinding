@@ -20,15 +20,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Views\Leather\" />
-    <Folder Include="Areas\Admin\Views\BindingStyle\" />
-    <Folder Include="Areas\Admin\Views\Journal\" />
-    <Folder Include="Areas\Admin\Views\CustomRequest\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\Admin\Views\UserManagement\" />
-    <Folder Include="Areas\Customer\Views\CustomJournal\" />
-    <Folder Include="Areas\Customer\Views\Shared\" />
-  </ItemGroup>
-
 </Project>

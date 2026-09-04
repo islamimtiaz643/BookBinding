@@ -1,22 +1,183 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+:root {
+    --leather-brown: #6b4226;
+    --leather-dark: #4a2c17;
+    --cream: #f5efe6;
+    --cream-dark: #e8dfd0;
+    --gold-accent: #b08d57;
+    --ink: #2b2320;
+    --muted: #7a6f63;
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: 'Georgia', 'Segoe UI', serif;
+    background-color: var(--cream);
+    color: var(--ink);
+}
+
+h1, h2, h3, h4, h5, .navbar-brand {
+    font-family: 'Georgia', serif;
+    letter-spacing: 0.3px;
+}
+
+/* ---------- Navbar ---------- */
+.site-navbar {
+    background-color: var(--leather-dark) !important;
+    border-bottom: 3px solid var(--gold-accent);
+}
+
+    .site-navbar .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--cream) !important;
+        letter-spacing: 1px;
+    }
+
+    .site-navbar .nav-link {
+        color: var(--cream-dark) !important;
+        font-weight: 500;
+        margin: 0 4px;
+        transition: color 0.2s ease;
+    }
+
+        .site-navbar .nav-link:hover {
+            color: var(--gold-accent) !important;
+        }
+
+.btn-leather {
+    background-color: var(--gold-accent);
+    border: none;
+    color: var(--leather-dark);
+    font-weight: 600;
+}
+
+    .btn-leather:hover {
+        background-color: #c9a877;
+        color: var(--leather-dark);
+    }
+
+/* ---------- Hero ---------- */
+.hero-section {
+    background: linear-gradient(135deg, var(--leather-dark) 0%, var(--leather-brown) 100%);
+    color: var(--cream);
+    padding: 5rem 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+    .hero-section::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(circle at 20% 30%, rgba(176,141,87,0.15) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(176,141,87,0.12) 0%, transparent 40%);
+        pointer-events: none;
+    }
+
+    .hero-section h1 {
+        font-size: clamp(2rem, 5vw, 3.25rem);
+        font-weight: 700;
+    }
+
+    .hero-section .lead {
+        color: var(--cream-dark);
+        font-size: clamp(1rem, 2vw, 1.25rem);
+    }
+
+/* ---------- Cards ---------- */
+.card {
+    border: 1px solid var(--cream-dark);
+    border-radius: 10px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(74, 44, 23, 0.15) !important;
+    }
+
+.card-title {
+    color: var(--leather-dark);
+    font-weight: 700;
+}
+
+/* ---------- Buttons ---------- */
+.btn-dark {
+    background-color: var(--leather-dark);
+    border-color: var(--leather-dark);
+}
+
+    .btn-dark:hover {
+        background-color: var(--leather-brown);
+        border-color: var(--leather-brown);
+    }
+
+.btn-outline-dark {
+    color: var(--leather-dark);
+    border-color: var(--leather-dark);
+}
+
+    .btn-outline-dark:hover {
+        background-color: var(--leather-dark);
+        border-color: var(--leather-dark);
+    }
+
+/* ---------- Section headings ---------- */
+.section-title {
+    color: var(--leather-dark);
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background-color: var(--gold-accent);
+    }
+
+/* ---------- Footer ---------- */
+.site-footer {
+    background-color: var(--leather-dark);
+    color: var(--cream-dark);
+    border-top: 3px solid var(--gold-accent);
+}
+
+    .site-footer a {
+        color: var(--gold-accent);
+    }
+
+/* ---------- Dashboard stat cards ---------- */
+.stat-card {
+    border-left: 4px solid var(--gold-accent);
+}
+
+    .stat-card h2 {
+        color: var(--leather-dark);
+        font-weight: 700;
+    }
+
+/* ---------- Forms ---------- */
+.form-label {
+    font-weight: 600;
+    color: var(--leather-dark);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--gold-accent);
+    box-shadow: 0 0 0 0.2rem rgba(176, 141, 87, 0.25);
+}
+
+/* ---------- Responsive tweaks ---------- */
+@media (max-width: 576px) {
+    .hero-section {
+        padding: 3rem 1rem;
+        text-align: center;
+    }
+
+    .card-img-top {
+        height: 180px !important;
+    }
 }

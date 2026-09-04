@@ -1,0 +1,63 @@
+﻿@model BookBinding.Models.CustomJournalRequest
+@{
+    ViewData["Title"] = "Review Request";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">Custom Request #@Model.Id</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="row g-4">
+        <div class="col-12 col-lg-7">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <tbody>
+                            <tr><th>Customer</th><td>@Model.User?.FullName (@Model.User?.Email)</td></tr>
+                            <tr><th>Phone</th><td>@(Model.User?.Phone ?? "-")</td></tr>
+                            <tr><th>Leather</th><td>@Model.Leather?.Type - @Model.Leather?.ColorName</td></tr>
+                            <tr>
+                                <th>Paper</th>
+                                <td>@(Model.Paper != null ? Model.Paper.Name : $"Custom {Model.CustomLengthMm} x {Model.CustomWidthMm} mm, {Model.DesiredGsm} GSM")</td>
+                            </tr>
+                            <tr><th>Binding Style</th><td>@Model.BindingStyle?.Name</td></tr>
+                            <tr><th>Page Count</th><td>@Model.PageCount</td></tr>
+                            <tr><th>Engraving</th><td>@(Model.EngravingText ?? "-")</td></tr>
+                            <tr><th>Notes</th><td>@(Model.Notes ?? "-")</td></tr>
+                            <tr><th>Submitted</th><td>@Model.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-5">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="mb-3">Update Status</h5>
+                    <form asp-action="UpdateStatus" method="post">
+                        <input type="hidden" name="Id" value="@Model.Id" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select name="Status" class="form-select" asp-items="Html.GetEnumSelectList<BookBinding.Models.Enums.RequestStatus>()">
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Admin Note (internal / quote info)</label>
+                            <textarea name="AdminNote" class="form-control" rows="4">@Model.AdminNote</textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark">Save</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

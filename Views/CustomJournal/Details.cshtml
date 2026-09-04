@@ -1,0 +1,33 @@
+﻿@model BookBinding.Models.CustomJournalRequest
+@{
+    ViewData["Title"] = "Request Details";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">Custom Request #@Model.Id</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-sm">
+                <tbody>
+                    <tr><th>Status</th><td><span class="badge bg-info text-dark">@Model.Status</span></td></tr>
+                    <tr><th>Leather</th><td>@Model.Leather?.Type - @Model.Leather?.ColorName</td></tr>
+                    <tr>
+                        <th>Paper</th>
+                        <td>@(Model.Paper != null ? Model.Paper.Name : $"Custom {Model.CustomLengthMm} x {Model.CustomWidthMm} mm, {Model.DesiredGsm} GSM")</td>
+                    </tr>
+                    <tr><th>Binding Style</th><td>@Model.BindingStyle?.Name</td></tr>
+                    <tr><th>Page Count</th><td>@Model.PageCount</td></tr>
+                    <tr><th>Engraving</th><td>@(Model.EngravingText ?? "-")</td></tr>
+                    <tr><th>Notes</th><td>@(Model.Notes ?? "-")</td></tr>
+                    <tr><th>Submitted</th><td>@Model.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")</td></tr>
+                    @if (!string.IsNullOrEmpty(Model.AdminNote))
+                    {
+                        <tr><th>Admin Note</th><td>@Model.AdminNote</td></tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-action="MyRequests" class="btn btn-outline-secondary">Back to My Requests</a>
+        </div>
+    </div>
+</div>
