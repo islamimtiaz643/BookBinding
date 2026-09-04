@@ -1,0 +1,68 @@
+﻿@model BookBinding.Models.ViewModels.PaperViewModel
+@{
+    ViewData["Title"] = "Add Paper";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">Add Paper</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label asp-for="LengthMm" class="form-label"></label>
+                        <input asp-for="LengthMm" class="form-control" />
+                        <span asp-validation-for="LengthMm" class="text-danger"></span>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label asp-for="WidthMm" class="form-label"></label>
+                        <input asp-for="WidthMm" class="form-control" />
+                        <span asp-validation-for="WidthMm" class="text-danger"></span>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label asp-for="Gsm" class="form-label"></label>
+                        <input asp-for="Gsm" class="form-control" />
+                        <span asp-validation-for="Gsm" class="text-danger"></span>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label asp-for="Color" class="form-label"></label>
+                        <input asp-for="Color" class="form-control" />
+                        <span asp-validation-for="Color" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label asp-for="DesignType" class="form-label"></label>
+                        <input asp-for="DesignType" class="form-control" placeholder="Plain / Marbled / Kraft / Patterned" />
+                        <span asp-validation-for="DesignType" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="ImageUrl" class="form-label"></label>
+                        <input asp-for="ImageUrl" class="form-control" placeholder="https://..." />
+                    </div>
+                    <div class="col-12 form-check ms-2">
+                        <input asp-for="IsActive" class="form-check-input" />
+                        <label asp-for="IsActive" class="form-check-label"></label>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-dark">Save</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
